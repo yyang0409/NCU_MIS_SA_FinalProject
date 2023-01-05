@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>W3.CSS Template</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+		<script src="statics/js/jquery-3.4.1.min.js"></script>
+		<script src="statics/js/jquery-confirm.js"></script>
+		
+		
+		<div class="w3-top z-index:3">
+	      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+	        <a href="home.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+	        <!-- Float links to the right. Hide them on small screens -->
+	        <div class="w3-right w3-hide-small">
+	          <a href="home.html" class="w3-bar-item w3-button">探索</a>
+	          <a href="add_proposal.html" class="w3-bar-item w3-button">我想提案</a>
+	          <a href="member.html" class="w3-bar-item w3-button">我的資料</a> 
+	          <a href="index.html" class="w3-bar-item w3-button">登出</a>
+	        </div>
+      	</div>
+   	   </div>
+   	   
+	</head>
+	<body>
+		<br><br>
+		<hr>
+		<h2 class="w3-center">您的提案紀錄</h2>
+		
+		<br>
+		
+		<div class="w3-row-padding" id="proposal_record">
+		
+		</div>
+		
+		<hr>
+	
+	</body>
+	
+	<script>
+	
+		function getMemberIdFromHome(){
+	    	let member_id = JSON.parse(localStorage.getItem("member_id"));
+			return member_id;
+	   }
+		
+		
+		
+		var member_id = getMemberIdFromHome();
+		var global_proposal_id = 0;
+		var global_proposal_raised_funds = 0;
+		var global_proposal_goal = 0;
+		var global_proposal_create_date = "";
+		var global_proposal_due_date = "";
+		var global_proposal_title = "";
+		var global_member_name = "";
+		var global_member_email = "";
+		var global_member_address = "";
+		var global_member_phone = "";
+		
+		function getProposal(){
+			
+			var proposal_record_panel = "";
+			
+			$.ajax({
+	            type: "GET",
+	            url: "api/proposal.do",
+	            crossDomain: true,
+	            cache: false,	            
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {
+	            	
+	            	            	
+	            	if (response.status == 200) { 	 
+	            		
+	            		$.each(response.response.data, function (){
+	            			if (global_proposal_id==this.proposal_id){
+	            				
+	            				global_proposal_title = this.title;
+	            				global_proposal_raised_funds = this.raised_funds;
+	            				global_proposal_goal = this.goal;
+	            				global_proposal_create_date = this.created_date;
+	            				global_proposal_due_date = this.due_date;
+	            				//alert("9")
+	            				proposal_record_panel+=addProposalRecord();
+	            			}	            			
+	            	
+	            		})  
+	            		
+	            		$("#proposal_record").append(proposal_record_panel);
+	            			            		
+	            		
+	            	}
+	            	
+	            },
+	            error: function () {
+	              alert("無法連線到伺服器！");
+	            }
+	          });		
+		}		
+			
+		function getSponsorRecord(){
+			//alert("2")
+			
+			var data = {					
+					
+					"member_id":member_id
+			};
+			
+			var data_string = JSON.stringify(data);
+			
+			
+			$.ajax({
+	            type: "PUT",
+	            url: "api/proposer.do",
+	            crossDomain: true,
+	            cache: false,
+	            data:data_string,
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {	            	
+	            	            	
+	            	if (response.status == 200) { 	 
+	            		
+	            		$.each(response.response, function (){
+	            			//alert("4")
+	            			
+	            			global_proposal_id =this; 
+	            			getProposal();
+	            			//alert("5")
+	            			
+	            			//alert("7")
+	            				            			
+	            		})           		            		              		
+	            		
+	            		
+	            		//alert("8")
+	            	}
+	            	
+	            },
+	            error: function () {
+	              alert("無法連線到伺服器！");
+	            }
+	          });		
+		}
+		
+		function addProposalRecord(){
+			//alert("10")
+			
+			inner_html = "";
+			inner_html += '<div class="w3-card-4 w3-container">';
+			inner_html += '<h2>提案紀錄</h2>';
+			inner_html += '<ul class="w3-ul w3-margin-bottom">';
+			inner_html += '<li>提案者姓名：'+global_member_name+'</li>';
+			inner_html += '<li>提案者住址：'+global_member_address+'</li>';
+			inner_html += '<li>提案者手機：'+global_member_phone+'</li>';
+			inner_html += '<li>提案者郵件：'+global_member_email+'</li>';
+			inner_html += '<li>提案標題：'+global_proposal_title+'</li>';
+			inner_html += '<li>提案目標額：'+global_proposal_goal+'</li>';
+			inner_html += '<li>提案贊助額：'+global_proposal_raised_funds+'</li>';
+			inner_html += '<li>提案起始日：'+global_proposal_create_date+'</li>';
+			inner_html += '<li>提案終止日：'+global_proposal_due_date+'</li>';
+			inner_html += '</ul>';
+			inner_html +='</div>';
+			inner_html +='<br>';
+			inner_html +='<br>';
+			
+			return inner_html;	
+			
+		}
+		
+		function getMember(){
+			
+			$.ajax({
+	            type: "GET",
+	            url: "api/member.do",
+	            crossDomain: true,
+	            cache: false,
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {            	           	
+	            	
+	            	if (response.status == 200) {      		
+	            		              		
+	            		$.each(response.response.data, function (){
+	            			
+	            			if (this.id==member_id){      
+	            				global_member_name = this.name;
+	            				global_member_address = this.address;
+	            				global_member_phone = this.phone;
+	            				global_member_email = this.email;   
+	            				//alert(global_member_email);
+	            			}          			
+	            			            			
+	            		})
+	            		
+	            		
+	            		
+	            	}
+	            	
+	            },
+	            error: function () {
+	              alert("無法連線到伺服器！");
+	            }
+	            
+	          });
+			
+		}
+		
+		getMember();
+		//alert("1")
+		getSponsorRecord();
+		//alert("3")
+		
+	
+	</script>
+
+</html>
