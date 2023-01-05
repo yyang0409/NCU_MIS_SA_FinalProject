@@ -33,7 +33,7 @@ public class MemberHelper {
     /** 靜態變數，儲存MemberHelper物件 */
     private static MemberHelper mh;
     private static MemberCredentialHelper mch = MemberCredentialHelper.getHelper();
-    
+    private static FollowingRecordHelper frh;
     /** 儲存JDBC資料庫連線 */
     private Connection conn = null;
     

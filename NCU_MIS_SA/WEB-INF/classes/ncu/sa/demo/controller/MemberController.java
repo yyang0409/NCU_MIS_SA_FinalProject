@@ -187,7 +187,7 @@ public class MemberController extends HttpServlet {
                 }
             	
             }
-        }
+       }
 
     /**
      * 處理Http Method請求GET方法（取得資料）
