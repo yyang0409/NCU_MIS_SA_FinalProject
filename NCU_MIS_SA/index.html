@@ -93,12 +93,12 @@
     	inner_html="";
     	inner_html +='<div>';
     	inner_html +='<img src="statics/img/proposal/'+data.image+'" alt="proposal photo" width="99%" >';
-    	inner_html +='<h3>'+data.title+'</h3>';
+    	inner_html +='<h3><b>'+data.title+'</b></h3>';
     	inner_html +='<p>'+data.content+'</p>';
     	inner_html +='<br>';
     	inner_html +='<p>目標募資額：'+data.goal+'</p>';
     	inner_html +='<p>目前募資額：'+data.raised_funds+'</p>';
-    	inner_html +='<input type="button"  value="進入頁面" onclick="getProposalID(this)" class="btn" id="'+data.proposal_id+'">'
+    	inner_html +='<input type="button"  value="進入頁面" onclick="getProposalID(this)" class="w3-button w3-light-grey w3-block" id="'+data.proposal_id+'">'
     	inner_html +='<br>';
     	inner_html +='<br>';
     	inner_html +='</div>';
