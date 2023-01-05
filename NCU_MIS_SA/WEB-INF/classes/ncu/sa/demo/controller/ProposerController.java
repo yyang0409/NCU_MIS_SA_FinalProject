@@ -153,8 +153,26 @@ public class ProposerController extends HttpServlet{
         }
         
 	}
-	
-	
-	
-	
+    
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	JsonReader jsr = new JsonReader(request);
+        JSONObject jso = jsr.getObject();
+    	
+    	int member_id_for_proposal = jso.getInt("member_id");
+    	JSONObject data = ph.getProposalId(member_id_for_proposal);
+    	
+        /** 新建一個JSONObject用於將回傳之資料進行封裝 */
+        JSONObject resp = new JSONObject();
+        resp.put("status", "200");
+        resp.put("message", "查詢成功");
+        resp.put("response", data);
+        System.out.print(resp.toString());
+        
+        
+        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+        jsr.response(resp, response);
+        
+    }
+
 }
