@@ -1,0 +1,160 @@
+<!DOCTYPE html>  
+<html>  
+	<title>註冊</title>
+    <link rel="stylesheet" href="statics/css/style.css">
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>  
+
+        input[type=text], input[type=password], textarea {  
+            width: 50%;  
+            padding: 10px;  
+            margin: 5px 0 22px 0;  
+            display: inline-block;  
+            border: none;  
+            background: #f1f1f1;  
+        }  
+        input[type=text]:focus, input[type=password]:focus {  
+            background-color: rgb(203, 203, 203);  
+            outline: none;  
+        }  
+      
+    </style>  
+    <body class="set_font">  
+        <div class="w3-top">
+            <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+                <a href="index.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+                <!-- Float links to the right. Hide them on small screens -->
+                <div class="w3-right w3-hide-small">
+                <a href="index.html" class="w3-bar-item w3-button">探索</a>
+                <a href="sign_in.html" class="w3-bar-item w3-button" >登入</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+       
+        <form id="form" accept-charset="utf-8">  
+            <div class="container">  
+                <center>  <h2> 會員註冊</h2> </center>  
+                <hr>  
+                <label for="username"><b>使用者姓名</b></label>
+                <br>  
+                <input type="text" placeholder= "請輸入使用者姓名" size="15" id="username" required>
+                <br>
+            
+                <label for="email"><b>電郵地址</b></label>  
+                <br>
+                <input type="text" placeholder="請輸入電郵地址" id="email" required>
+                <br>
+
+                <label for="psw"><b>輸入密碼</b></label>  
+                <br>
+                <input type="password" placeholder="請輸入密碼" id="psw" required>  
+                <br>
+
+                <label for="psw-repeat"><b>再次輸入密碼</b></label>
+                <br> 
+                <input type="password" placeholder="請重新輸入密碼" id="psw-repeat" required>
+                <br>
+
+                <label for="userphone"><b>聯絡電話</b></label>  
+                <br>
+                <input type="text" placeholder="請輸入聯絡電話" size="10" id="userphone"required>  
+                <br> 
+
+                <b>聯絡地址 : </b> 
+                <br>
+                <textarea cols="40" rows="5" placeholder="請輸入聯絡地址" id="address" required></textarea>  
+                <br>
+
+                <div><input class=" w3-button w3-light-grey" value="註冊" id="submit" readonly="readonly" ></div>
+                <br>
+                <br>
+                <hr>
+            </div>    
+        </form>  
+    </body>  
+
+    <footer class="footerclass">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">WAWA</a></p>
+    </footer>
+    
+    
+	<script type="text/javascript">
+                $(document).ready(function() {
+                    // 處理表單點擊事件
+                    var $form = $('#submit');
+                    $form.click(function() {
+                        submit();
+                    });
+
+                    function submit() {
+                    	var type ="sign_up";
+                        var name = $('#username').val();
+                        var email = $('#email').val();
+                        var password = $('#psw').val();
+                        var password_repeat = $('#psw-repeat').val();
+                        var phone = $('#userphone').val();
+                        var address = $('#address').val();
+
+                        var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                        var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+                        if (!email_rule.test(email)) {
+                       
+                            alert("Email格式不符！");
+                        }
+                        else if(!password_rule.test(password)) {
+                            alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+                        }
+                        else if(password!=password_repeat) {
+                            alert("兩次輸入的密碼不同");
+                        }
+                        else {
+                            // 將資料組成JSON格式
+                            var data_object = {
+                            	"type":type,
+                                "name": name,
+                                "email": email,
+                                "password": password,
+                                "phone" : phone,
+                                "address" : address
+                            };
+
+                            // 將JSON格式轉換成字串
+                            var data_string = JSON.stringify(data_object);
+
+                            // 發出POST的AJAX請求
+                            $.ajax({
+                                    type: "POST",
+                                    url: "api/member.do",
+                                    data: data_string,
+                                    crossDomain: true,
+                                    cache: false,
+                                    dataType: 'json',
+                                    timeout: 5000,
+                                    success: function (response) {
+                                    	
+                                    	if(response.status == 200){
+                                    		alert("註冊成功");
+                        					window.location.href='sign_in.html';	
+                                    	}
+                                    	else{
+                                    		alert("Email存在於系統中");
+                                    		window.location.href='sign_up.html';
+                                    	}
+                                    },
+                                    error: function () {
+                                        alert("無法連線到伺服器！");
+                                    }
+                            });
+                        }
+                    }
+
+                });
+                
+      </script>
+
+</html>  

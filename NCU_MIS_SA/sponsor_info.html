@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>W3.CSS Template</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="statics/css/style.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<script src="statics/js/jquery-3.4.1.min.js"></script>
+
+	</head>
+    	
+
+    <body class="set_font">
+        <div class="w3-top">
+            <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+              <a href="home.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+              <!-- Float links to the right. Hide them on small screens -->
+              <div class="w3-right w3-hide-small">
+                <a href="home.html" class="w3-bar-item w3-button">探索</a>
+        	    <a href="add_proposal.html" class="w3-bar-item w3-button">我想提案</a>
+                <a href="member.html" class="w3-bar-item w3-button">我的資料</a> 
+                <a href="index.html" class="w3-bar-item w3-button">登出</a>
+              </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="header" id="sponsor_info_top">
+            
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <hr>
+            <br>
+        </div>
+        <div class="program-select" >
+        	<div id="sponsor_info_bottom">
+        	</div>
+            
+            <br>
+            <label for="payment"><b>購買份數</b></label>
+            <br>
+            <div >
+	            <div class="select_style"  style="display:inline">
+	                  
+	                    <input type="text" value="1" id="amount">	                       
+	                
+	            </div>
+	            <div  style="display:inline">
+	            <button type="button"  onclick="substratAmount()">-</button>
+	            <button type="button"  onclick="addAmount()">+</button>
+	            </div>
+            </div>
+            
+            <br>
+            <br>
+            
+
+            <label for="payment"><b>付款方式</b></label>
+            <br>
+            <div class="select_style">
+                <select id="select_payment" >  
+                    <option value="creditcard">信用卡付款</option>
+                    <option value="atm">ATM付款</option>  
+                    <option value="convenientstore">超商付款</option>   
+                </select>  
+            </div>
+            <br>
+            <br>
+          
+            <label for="receiver"><b>收件人</b></label>   
+            <br>
+            <input type="text" value= "請輸入使用者姓名" size="15" id="username" required>
+            <br>
+            
+            <label for="address"><b>收件地址</b></label>  
+            <br>
+            <input type="text" value="請輸入收件地址" id="useraddress" required>
+            <br>
+
+            <label for="receiverphone"><b>聯絡電話</b></label>  
+            <br>
+            <input type="text" value="請輸入聯絡電話" size="10" id="userphone" required>  
+            <br> 
+
+            <button type="submit" class="registerbtn_75" onclick="sponsor()">立即贊助</button>
+            <button type="button" class="registerbtn_75" onclick="changeData()">更改會員資料</button>
+            <br>
+            <br>
+            <br>
+        </div>
+    </body>
+    <script>
+        var click_proposal_id=getClickProposalIdFromHome();
+    	var click_proposal_option_id = getClickProposalIdFromProposal();
+    	
+    	//更新介面
+    	
+    	var global_proposal_option_title = "";
+    	var global_proposal_option_price = 0;
+    	var global_proposal_option_description = "";
+    	
+    	var global_proposal_id = 0;
+    	var global_proposal_title = ""; 
+    	var global_raised_funds = 0;
+    	var global_goal = 0;
+    	var global_image = "";
+    	
+    	//用於加入訂單資料庫的變數
+    	//總共有 sponsor_record_id、member_id、proposal_option_id、sponsor_payment_type、sponsor_amout、proposal_unit_price、total_price  
+    	var global_sponsor_amount = 1;
+    	var global_member_id = getMemberIdFromHome();
+    	var global_payment_type = 1;
+    	var global_total_price = global_proposal_option_price;
+    	
+    	//alert("會員id:"+global_member_id);
+    	//alert("提案id:"+click_proposal_id);
+    	//alert("提案方案id:"+click_proposal_option_id);
+    	
+    	function addAmount(){
+    		global_sponsor_amount+=1;
+    		$("#amount").val(global_sponsor_amount);
+    		
+    	}
+    	
+    	function substratAmount(){
+    		if (global_sponsor_amount>1){
+    			global_sponsor_amount-=1;
+        		$("#amount").val(global_sponsor_amount);
+    		}
+    	}
+    	
+    	function getClickProposalIdFromHome(){
+        	let click_proposal_id = JSON.parse(localStorage.getItem("click_proposal_id"))
+    		return click_proposal_id
+        }
+    	
+    	function sponsor(){
+    	
+    		var payment_string=document.getElementById("select_payment").value;
+    		
+    		if (payment_string=="creditcard"){
+    			global_payment_type = 1;
+    		}
+    		else if(payment_string=="atm"){
+    			global_payment_type = 2;
+    		}
+    		else{
+    			global_payment_type = 3;
+    		}
+    		
+    		global_total_price = global_proposal_option_price*global_sponsor_amount;    		
+    		
+    		var data={    				
+    				"member_id": global_member_id,
+    				"proposal_option_id": click_proposal_option_id,
+    				"sponsor_payment_type": global_payment_type,
+    				"sponsor_amount": global_sponsor_amount,
+    				"proposal_unit_price": global_proposal_option_price,
+    				"total_price": global_total_price    			
+    		}
+    		    		
+    		var data_string = JSON.stringify(data);
+    		alert(data_string);
+    		$.ajax({
+                type: "POST",
+                url: "api/sponsor_record.do",
+                data: data_string,
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                	
+                	if (response.status == 200) {
+                		               	  
+                		alert("成功贊助");               		
+                		window.location.href='member.html';
+                	}
+                	
+                },
+                error: function () {
+                  alert("無法連線到伺服器！");
+                }
+              });
+    		
+    	}
+    	
+    	function changeData(){
+    		window.location.href="member.html";
+      	}
+    	
+    	function getProposalOption(){
+            $.ajax({
+                type: "GET",
+                url: "api/option.do",
+                //data:"proposal_id="+click_proposal_option_id,
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                  if (response.status == 200) {
+                	$.each(response.response.data, function (){ 
+                		
+                		 if(this.proposalOption_id==click_proposal_option_id){ 
+                			global_proposal_option_title = this.proposal_option_title;
+                			global_proposal_id = this.proposal_id;
+                			global_proposal_option_description = this.description;
+                			global_proposal_option_price = this.price;
+                			
+                		 }
+                		})
+                 }
+                },
+                error: function () {
+                  alert("無法連線到伺服器！");
+                }
+              });
+            
+        }
+    	
+    	function getProposal(){
+            $.ajax({
+                type: "GET",
+                url: "api/proposal.do",
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                  if (response.status == 200) {
+                	  
+                	
+                	$.each(response.response.data, function (){
+                		if(this.proposal_id==global_proposal_id){                			
+                			global_raised_funds = this.raised_funds;
+                			global_goal = this.goal;
+                			global_image = this.image;
+                			global_proposal_title = this.title;               			              			
+                	    	
+                		}
+                	})
+                	
+                	addSponsorInfoTop();
+                	addSponsorInfoBottom()
+                	
+                  }
+                },
+                error: function () {
+                  alert("無法連線到伺服器！");
+                }
+              });
+        }
+    	
+    	function getMemerInfo(){
+    		 $.ajax({
+                 type: "GET",
+                 url: "api/member.do",
+                 crossDomain: true,
+                 cache: false,                 
+                 dataType: 'json',
+                 timeout: 5000,
+                 success: function (response) {
+                    if (response.status == 200) {                   	  
+                   	
+                   	$.each(response.response.data, function (){
+                   		if(this.id==global_member_id){                   			
+                   			$("#username").val(this.name);
+                       		$("#useraddress").val(this.address);
+                       		$("#userphone").val(this.phone);
+                   		}
+                   		                   		                   		
+                   	})
+
+                     }
+                    
+                   },
+                 error: function () {
+                   alert("無法連線到伺服器！");
+                 }
+               });
+    	}
+    	
+    	getProposalOption();
+    	getProposal();  
+    	getMemerInfo();
+
+    	function addSponsorInfoTop(){
+    		inner_html = "";
+    		inner_html += '<div class="project-pic">';
+    		inner_html += '<img src = "statics/img/proposal/'+global_image+'" alt="project-picture" style="width: 80%;">';
+    		inner_html += '</div>';
+    		inner_html += '<div class="project-name-info">';
+    		inner_html += '<h5><b>'+global_proposal_title+'</b></h5>';
+    		inner_html += '<h6><b>提案人:</b>WAWA</h6>';
+    		//inner_html += '<br>';
+    		inner_html += '<h6><b>目前金額：NT$'+global_raised_funds+'</b> / 目標金額：NT$'+global_goal+'</h6>';
+    		inner_html += '<br>';
+    		inner_html += '</div>';    
+    		
+    		$("#sponsor_info_top").append(inner_html);
+    		
+    	}
+    	
+    	
+    	function addSponsorInfoBottom(){
+    		inner_html = "";
+    		inner_html += '<p><b>選擇方案：'+global_proposal_option_title +'</b></p>';
+    		//inner_html += '<p>方案名稱：'+global_proposal_option_title+'</p>';
+    		inner_html += '<p><b> 方案內容：'+global_proposal_option_description+'</p>';
+    		//inner_html += '<br>';
+    		inner_html += '<h6><b>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp; 方案金額 NT$'+global_proposal_option_price+'</b></h6>';
+    		//inner_html += '<h4><b>總價    NT$'+global_proposal_option_price+'</b></h4>';          
+    		$("#sponsor_info_bottom").append(inner_html);
+    	}
+    	
+    	
+    	function addProposalOptionTitle(data){
+    		inner_html = "";
+    		inner_html += '<h5><b>'+data.proposal_option_title+'</b></h5>';
+    		return inner_html
+    	}
+    
+  		//抓取從proposal頁面抓過來的proposaloption id by王偉倫
+    
+	    function getClickProposalIdFromProposal(){
+	    	let click_proposal_option_id = JSON.parse(localStorage.getItem("click_proposal_option_id"));
+			return click_proposal_option_id
+	    }
+  		
+	    function getMemberIdFromHome(){
+    		let member_id = JSON.parse(localStorage.getItem("member_id"));    		
+    		return member_id;
+    	}
+  		
+  		
+    </script>
+
+    <hr>
+    
+    <footer class="footerclass">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">WAWA</a></p>
+    </footer>
+</html>

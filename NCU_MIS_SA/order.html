@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Order</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="statics/css/orderstyle.css">
+        
+    
+    </head>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    
+    <body>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+        <a href="#home" class="w3-bar-item w3-button"><b>BR</b>呱呱WAWA</a>
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+          <a href="member.html" class="w3-bar-item w3-button">我的資料</a> 
+          <a href="member_info.html" class="w3-bar-item w3-button">我的提案</a> <!-- 介面還沒出來 -->
+          <a href="member_info.html" class="w3-bar-item w3-button">我的贊助</a> <!-- 介面還沒出來 -->
+          <a href="member_info.html" class="w3-bar-item w3-button">提案介面</a> <!-- 介面還沒出來 -->
+          <a href="home.html" class="w3-bar-item w3-button">贊助介面</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-header text-center bg-light">
+        <h1 class="display-4">訂單詳情</h1>
+        <p class="lead">以下為訂單的所有資料</p>
+    </div>
+
+    <div class="container">
+        <div class="py-5">    
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+            <h5 class="border-bottom border-gray pb-2 mb-0">訂單資料</h5>
+          
+        <div class="row">
+            <div class="col media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">訂單編號</strong>
+                  <span id="order_id">{{order_id}}</span>
+                </p>
+            </div>
+
+            <div class="col media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">付款方式</strong>
+                  <span id="payment_type">{{payment_type}}</span>
+                </p>
+            </div>
+        </div>
+           
+        <div class="row">
+            <div class="col media text-muted pt-3">
+               <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">姓名</strong>
+                <span id="member_name">{{member_name}}</span>
+               </p>
+            </div>
+             
+            <div class="col media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">手機號碼</strong>
+                <span id="phone">{{phone}}</span>
+              </p>
+            </div>
+            
+            <div class="col media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">電子郵件</strong>
+                <span id="email">{{email}}</span>
+              </p>
+            </div>
+        </div>
+           
+        <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">住址</strong>
+            <span id="address">{{address}}</span>
+            </p>
+        </div>
+           
+        
+
+        <div class="row">
+            <div class="col media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">項目數量</strong>
+                <span id="item">{{item}}</span>
+              </p>
+            </div>
+         </div>
+          
+        <h3 class="d-block text-right mt-3">總價：$ <span id="total">{{total}}</span></h3>
+    </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-center" style="width: 10%">商品編號</th>
+                    <th class="text-center" style="width: 40%">品名</th>
+                    <th class="text-center" style="width: 15%">單價</th>
+                  </tr>
+                </thead>
+                <tbody id="panel"></tbody>
+            </table>
+        </div>
+    </div>
+    
+
+    <!-- Footer -->
+    <footer class="footerclass">
+        <p>Powered by WAWA</p>
+    </footer>
+    
+    <!-- end of body-->    
+    </body>
+
+    <script>
+      //取得網址參數
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+
+    function getOrderData() {
+      $.ajax({
+        type: "GET",
+        url: "api/order.do",
+        data: "id=" + id,
+        crossDomain: true,
+        cache: false,
+        dataType: 'json',
+        timeout: 5000,
+        success: function (response) {
+            if(response.status == 200){
+                updateHTML(response.response.data);
+            }
+        },
+        error: function () {
+            alert("無法連線到伺服器！");
+        }
+      });
+    }
+
+    getOrderData();
+
+    function updateHTML(data) {
+      $("#order_id").html(data['order_info']['id']);
+      $("#payment_type").html(data['order_info']['payment_type']);
+      $("#member_name").html(data['order_info']['member_name']);
+      $("#phone").html(data['order_info']['phone']);
+      $("#email").html(data['order_info']['email']);
+      $("#address").html(data['order_info']['address']);
+      $("#item").html(data.proposaloption_info.length);
+    
+      var total_price = Big(0.0);
+      var quantity = 0;
+      var inner_html = "";
+    
+      $.each(data.product_info, function (k, v) {
+        quantity += v['quantity'];
+        total_price = total_price.plus(v['price']);
+        inner_html += updateOrderProductTable(v);
+      });
+    
+      $("#quantity").html(quantity);
+      $("#total").html(total_price.toString());
+    
+      $("#table > tbody").empty();
+      $("#panel").append(inner_html);
+
+  }
+
+  function updateOrderProductTable(data) {
+    var table_html = "";
+    table_html += '<tr id="row_' + data.id + '">';
+    table_html += '<td class="align-middle text-center">' + data.proposaloption.id + '</td>';
+    table_html += '<td class="align-middle"><p class="text-break">' + data.proposaloption.proposal_option_title + '</p></td>';
+    table_html += '<td class="align-middle text-center"><span id="price_' + data.id + '">' + data.price + '</td>';
+    table_html += '<td class="align-middle text-center">' + data.quantity + '</td>';
+    table_html += '</tr>';
+    
+    return table_html;
+    
+  }
+  
+  </script>
+
+</html>

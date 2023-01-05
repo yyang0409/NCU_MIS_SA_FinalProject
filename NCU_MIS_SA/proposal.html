@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>提案資訊</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="statics/css/proposal.css">
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+
+<head>
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+        <a href="home.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+          <a href="home.html" class="w3-bar-item w3-button">探索</a>
+          <a href="add_proposal.html" class="w3-bar-item w3-button">我想提案</a>
+          <a href="member.html" class="w3-bar-item w3-button">我的資料</a> 
+          <a href="index.html" class="w3-bar-item w3-button">登出</a>
+        </div>
+      </div>
+    </div>
+    
+   </head>
+
+<body>
+
+    <div class="w3-row w3-padding-64" id="about">
+        <div class="w3-col m6 w3-padding-large w3-hide-small" id="proposal_image">
+         <!-- <img src="https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg" class="w3-round w3-image" alt="Table Setting" width="800" height="1000"> -->
+        </div>
+   
+        <div class="w3-col m6 w3-padding-large">
+          <h2 class="w3-center" id="proposal_title">提案名稱</h2>
+           <!--跳出訊息-->
+          <span><p><button onclick="document.getElementById('id01').style.display='block'" class="w3-right w3-padding-reallysmall w3-button w3-blue-grey">追蹤</button></p>
+            <div id="id01" class="w3-modal">
+                 <div class="w3-modal-content">
+                    <div class="w3-container">
+                         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p>追蹤成功</p>
+                    </div>
+                 </div>
+            </div>
+            <!--跳出訊息結束-->
+            <h5 class="w3-left w3-opacity">提案人:WAWA</h5>
+          </span>
+          <br><br>
+          <p class="w3-large" id="proposal_content">
+          </p>
+        </div>
+    </div>
+
+    <!--贊助方案與常見問題-->
+
+    <div class="w3-container" id="menu">
+        <div class="w3-content" style="max-width:20000px"><!--大平台-->
+
+          <div class="w3-row w3-center w3-card w3-padding">
+            <a href="javascript:void(0)" onclick="openMenu(event, 'About');" id="myLink">
+              <div class="w3-col s6 tablink">About</div>
+            </a>
+            <a href="javascript:void(0)" onclick="openMenu(event, 'Quetion');">
+              <div class="w3-col s6 tablink">FAQ</div>
+            </a>
+          </div>
+
+          <div id="About" class="w3-container menu w3-padding-32 w3-card" ><!--難搞贊助介面開始-->
+ 			<div class="w3-container w3-row-padding" id="proposal_option">
+
+            </div><!--大方匡結束-->
+          </div><!--難搞贊助介面結束-->
+
+     
+          <div id="Quetion" class="w3-container menu w3-padding-48 w3-card"><!--難搞FAQ介面開始-->
+			<P>目前尚未有收到問題~</P>
+            <!--  <h5>早安</h5>
+            <p class="w3-text-grey">你好</p><br>
+          
+            <h5>喜歡吃巧克力嗎</h5>
+            <p class="w3-text-grey">你是我眼中的巧克力</p><br>
+          
+            <h5>喔</h5>
+            <p class="w3-text-grey">早安寶貝</p><br>
+          
+            <h5>晚安</h5>
+            <p class="w3-text-grey">早安午安晚安</p><br>
+          
+            <h5>你是Hook嗎</h5>
+            <p class="w3-text-grey">我要來完成一週挑戰</p>-->
+          </div>  <!--難搞FAQ介面結束-->
+          
+        </div><!--大平台結束-->
+    </div><!--贊助方案與常見問題-->
+
+        <!--Contactus-->
+        <div class="w3-container w3-padding-32" id="contact">
+            <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">聯絡我們</h3>
+            <p>有任何問題歡迎聯絡我們.</p>
+            <form action="/action_page.php" target="_blank">
+              <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+              <input class="w3-input w3-section w3-border" type="text" placeholder="Email" required name="Email">
+              <input class="w3-input w3-section w3-border" type="text" placeholder="Comment" required name="Comment">
+              <button class="w3-button w3-black w3-section" type="submit">
+                <i class="fa fa-paper-plane"></i> SEND MESSAGE
+              </button>
+              <!-- input type="button" value="進入頁面" onclick="getProposalID()" class="btn" id="click_proposal_id"> -->
+              
+            </form>
+          </div>
+      </div>   	
+     
+</body>
+<footer class="footerclass">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">WAWA</a></p>
+</footer>
+      
+     
+<!--難搞介面的script-->
+      <script>
+     
+      	var click_proposal_id=0; 
+      	//var photo="";
+      	click_proposal_id=getClickProposalIdFromHome();
+      	
+      	/**function getProposalID(){
+      		alert("id 為: " +click_proposal_id+photo);
+      	}**/
+		
+      	function getProposal() {
+            $.ajax({
+              type: "GET",
+              url: "api/proposal.do",
+              crossDomain: true,
+              cache: false,
+              dataType: 'json',
+              timeout: 5000,
+              success: function (response) {
+                if (response.status == 200) {
+              	var proposal_image = ''; 
+              	var proposal_title = '';
+              	var proposal_content = '';
+              	
+              	$.each(response.response.data, function (){
+              		if(this.proposal_id==click_proposal_id){
+              			proposal_image += addProposalImage(this);
+              			proposal_title += addProposalTitle(this);
+              			proposal_content += addProposalContent(this);
+              		}
+              	})
+              	
+              	$("#proposal_image").append(proposal_image);
+              	$("#proposal_title").append(proposal_title);
+              	$("#proposal_content").append(proposal_content);                           
+              	
+                }
+              },
+              error: function () {
+                alert("無法連線到伺服器！");
+              }
+            });
+         }
+            
+         function getAllProposalOption(){
+            $.ajax({
+                type: "GET",
+                url: "api/option.do",
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                  if (response.status == 200) {
+                	var proposal_option = ''; 
+                	
+                	$.each(response.response.data, function (){
+                		if(this.proposal_id==click_proposal_id){
+                			proposal_option += addProposalOption(this);
+                		}
+                	})
+                	
+                	$("#proposal_option").append(proposal_option);              
+
+                  }
+                },
+                error: function () {
+                  alert("無法連線到伺服器！");
+                }
+              });
+            
+          }
+
+         getProposal();
+         getAllProposalOption();
+          
+          
+          
+        //更改圖片 by王偉倫 
+        function addProposalImage(data){    	
+        	inner_html="";
+     		inner_html += '<img src="statics/img/proposal/'+data.image+'" alt="proposal photo" class="w3-round w3-image" width="800" height="1000">';
+     		photo=data.image;
+     		return inner_html;
+        }
+        
+        //更改提案名稱 by 王偉倫
+        function addProposalTitle(data){
+       		inner_html="";
+     		inner_html += data.title;
+        	return inner_html;
+        }
+        
+        //更改提案內容 by 王偉倫
+        function addProposalContent(data){
+       		inner_html="";
+     		inner_html += data.content;
+        	return inner_html;
+        }
+        
+        
+        
+        function addProposalOption(data){
+       		inner_html="";
+       		inner_html+='<div class="w3-container-display-topleft w3-third ">';
+       		inner_html+='<div class="w3-container-topleft w3-padding-small w3-black">'+data.proposal_option_title+'</div>';
+       		inner_html+='<img src="statics/img/proposal/'+data.image+'" alt="P2" style="height: 230px;width: 458px;;">'
+       		inner_html+='<p>'+data.description+'</p>';
+       		inner_html+='<p>新台幣：'+data.price+'</p>';
+       		inner_html+='<a href="#want" class="w3-button w3-light-grey w3-block" onclick="getProposalOptionID(this)" id="'+data.proposalOption_id+'" >贊助</a>';  
+       		inner_html+='</div>';
+        	return inner_html;
+        }
+        
+		//抓取從home主頁抓過來的proposal id by王偉倫
+        
+        function getClickProposalIdFromHome(){
+        	let click_proposal_id = JSON.parse(localStorage.getItem("click_proposal_id"))
+    		return click_proposal_id
+        }
+        
+        //抓取贊助之proposalOption_id至order頁面 by王偉倫
+        
+        function getProposalOptionID(myObj){
+        	//alert("ProposalOption id 為: " +myObj.id);
+        	localStorage.setItem("click_proposal_option_id",JSON.stringify(myObj.id)); 
+        	window.location.href="sponsor_info.html";        	  
+        }
+      	        
+        
+        // Tabbed Menu by林愛庭
+        function openMenu(evt, menuName) {
+          var i, x, tablinks;
+          x = document.getElementsByClassName("menu");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablink");
+          for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+          }
+          document.getElementById(menuName).style.display = "block";
+          evt.currentTarget.firstElementChild.className += " w3-dark-grey";
+        }
+        document.getElementById("myLink").click();
+        
+        
+        
+        
+        
+        
+      </script>
+        
+
+</html>

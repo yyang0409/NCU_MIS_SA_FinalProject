@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>我想提案</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="statics/css/proposal.css">
+<script src="statics/js/jquery-3.4.1.min.js"></script>
+
+<head>
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+        <a href="#home" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+          <a href="home.html" class="w3-bar-item w3-button">探索</a>
+          <a href="member.html" class="w3-bar-item w3-button">我的資料</a>
+          <a href="index.html" class="w3-bar-item w3-button">登出</a>
+        </div>
+      </div>
+    </div>
+    
+</head>
+
+
+
+<body>
+<br><br><br>
+<center><h3>建立你的提案</h3></center>
+<div class="w3-container">
+    <div class="w3-content" style="max-width:900px">
+      <div class="w3-container w3-padding-32 w3-card">
+          <div class="w3-container w3-padding-32">
+            <div class="w3-container">
+                <div class="w3-dropdown-hover">
+                     <select class="w3-button  w3-dark-grey" id="category">
+                     	<option value="0">請選擇提案類別</option>
+                     	<option value="1">設計</option>
+                     	<option value="2">科技</option>
+                     	<option value="3">攝影</option>
+                     	<option value="4">音樂</option>
+                     	<option value="5">教育</option>
+                     	<option value="6">遊戲</option>
+                     	<option value="7">藝術</option>
+                     	<option value="8">出版</option>
+                     	<option value="9">表演</option>
+                     	<option value="10">飲食</option>
+                     </select>
+                </div>
+            </div>
+            <br>
+            <p>計畫名稱</p>
+            <input class="w3-input w3-border" type="text" required name="Title" id="title">
+            <p>計畫簡介</p>
+            <input class="w3-input w3-border" type="text" required name="Info" id="content" >
+            <p>募資目標金額</p>
+                <input class="w3-input w3-border" type="text" required name="Goal" id="goal"> 
+            
+            <div class="w3-third">
+                <br>
+                <p>預計開始時間</p>
+                        <label>
+                            <input type="date" name="stadate"  id="created_date">
+                        </label>
+            </div>
+            <div class="w3-third">
+            <br>
+                <p>預計結束時間</p>
+                        <label>
+                            <input type="date" name="duedate" id="due_date" >
+                        </label>
+                <br>
+            </div>
+            <br>
+            <div class="w3-third">
+                    <p>封面照片</p>
+                    <input class="w3-input w3-button w3-dark-grey w3-section" accept="image/*" type="file" id="image">
+            </div>
+            
+            <br><br><br><br><br>
+            <p>設定方案</p>
+              <div class="w3-row-padding">
+                <div class="w3-third">
+                    <p>方案Ａ名稱</p>
+                  <input class="w3-input w3-border" type="text" placeholder="方案Ａ名稱" id="A_title">
+                </div>
+                <div class="w3-third">
+                    <p>方案Ｂ名稱</p>
+                  <input class="w3-input w3-border" type="text" placeholder="方案Ｂ名稱" id="B_title">
+                </div>
+                <div class="w3-third">
+                    <p>方案Ｃ名稱</p>
+                  <input class="w3-input w3-border" type="text" placeholder="方案Ｃ名稱" id="C_title">
+                </div>
+              </div>
+              
+			  <div class="w3-row-padding">
+                <div class="w3-third">
+                    <p>方案Ａ簡述</p>
+                  <input class="w3-input w3-border" type="text" id="A_description">
+                </div>
+                <div class="w3-third">
+                    <p>方案Ｂ簡述</p>
+                  <input class="w3-input w3-border" type="text" id="B_description">
+                </div>
+                <div class="w3-third">
+                    <p>方案Ｃ簡述</p>
+                  <input class="w3-input w3-border" type="text" id="C_description">
+                </div>
+              </div>
+              
+              <div class="w3-row-padding">
+                <div class="w3-third">
+                    <p>方案Ａ贊助金額</p>
+                  <input class="w3-input w3-border" type="text" placeholder="請輸入金額" id="A_price">
+                </div>
+                <div class="w3-third">
+                    <p>方案Ｂ贊助金額</p>
+                  <input class="w3-input w3-border" type="text" placeholder="請輸入金額" id="B_price">
+                </div>
+                <div class="w3-third">
+                    <p>方案Ｃ贊助金額</p>
+                  <input class="w3-input w3-border" type="text" placeholder="請輸入金額" id="C_price">
+                </div>
+              </div>
+
+              <div class="w3-row-padding">
+                <div class="w3-third">
+                    <input class="w3-input w3-button w3-dark-grey w3-section" accept="image/*" type="file" id="A_image">
+                </div>
+                <div class="w3-third">
+                    <input class="w3-input w3-button w3-dark-grey w3-section" accept="image/*" type="file" id="B_image">
+                </div>
+                <div class="w3-third">
+                    <input class="w3-input w3-button w3-dark-grey w3-section" accept="image/*" type="file" id="C_image">
+                </div>
+              </div>
+              
+              <br><br>
+              <center>
+                <button class="w3-button w3-black w3-section" type="submit" id="submit">
+                <i class="fa fa-paper-plane"></i> 確定提案
+              </button>
+            </center>
+
+            </form>
+          </div>
+      </div>
+    </div>
+</div>
+</div>
+</body>
+ <br><br><br> 
+<footer class="footerclass">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">WAWA</a></p>
+</footer>
+
+<script>
+
+		var proposer_id=getProposerId();
+		 //alert("id 為: " +proposer_id);
+		function getProposerId(){
+        	let proposer_id = JSON.parse(localStorage.getItem("member_id"));
+    		return proposer_id;
+       	}
+		
+		document.getElementById("submit").onclick = function() {submit()};
+		function submit(){
+		
+		    var title = $('#title').val();
+		    var content = $('#content').val();
+		    var category=document.getElementById('category').value;
+		    var goal = $('#goal').val();
+		    var created_date=$('#created_date').val();;
+		    var due_date=$('#due_date').val();;
+		    var image = document.getElementById('image').files[0].name;
+		   	var A_title = $('#A_title').val();
+		   	var B_title = $('#B_title').val();
+		   	var C_title = $('#C_title').val();
+		   	var A_description = $('#A_description').val();
+		   	var B_description = $('#B_description').val();
+		   	var C_description = $('#C_description').val();
+		   	var A_image = document.getElementById('A_image').files[0].name;
+		   	var B_image = document.getElementById('B_image').files[0].name;
+		   	var C_image = document.getElementById('C_image').files[0].name;
+		   	var A_price = $('#A_price').val();
+		   	var B_price = $('#B_price').val();
+		   	var C_price = $('#C_price').val();
+		   	
+		  
+		       // 將資料組成JSON格式
+		        var data_object = {
+		        	"proposer_id":proposer_id,
+		        	"category_id":category,
+		        	"title":title,
+		        	"content":content,
+		        	"goal":goal,
+		        	"image":image,
+		        	"created_date":created_date,
+		        	"due_date":due_date,
+		        	"A_title":A_title,
+		        	"B_title":B_title,
+		        	"C_title":C_title,
+		        	"A_description":A_description,
+		        	"B_description":B_description,
+		        	"C_description":C_description,
+		        	"A_image":A_image,
+		        	"B_image":B_image,
+		        	"C_image":C_image,
+		        	"A_price":A_price,
+		        	"B_price":B_price,
+		        	"C_price":C_price
+		        };
+		
+		        // 將JSON格式轉換成字串
+		        var data_string = JSON.stringify(data_object);
+		        console.log(data_string);
+		        alert(data_string);
+		        // 發出POST的AJAX請求
+		        $.ajax({
+		                type: "POST",
+		                url: "api/proposal.do",
+		                data: data_string,
+		                crossDomain: true,
+		                cache: false,
+		                dataType: 'json',
+		                timeout: 5000,
+		                success: function (response) {
+		                	if(response.status == 200){
+		                	
+		                		alert("新增成功");
+		                		window.location.href='home.html';	
+		                	}
+		                },
+		                error: function () {
+		                    alert("新增時，無法連線到伺服器！");
+		                }
+		        });
+		        
+		        
+		  }
+		
+</script>
+
+</html>

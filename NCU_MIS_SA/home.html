@@ -14,10 +14,13 @@
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
-    <a href="index.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+    <a href="home.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
     <!-- Float links to the right. Hide them on small screens -->
-    <div class="w3-right w3-hide-small">
-      <a href="sign_in.html" class="w3-bar-item w3-button">登入</a> 
+    <div class="w3-right w3-hide-small"> 
+      <a href="add_proposal.html" class="w3-bar-item w3-button">我想提案</a> 
+      <a href="member.html" class="w3-bar-item w3-button">我的資料</a> 
+      <a href="index.html" class="w3-bar-item w3-button">登出</a>
+      
     </div>
   </div>
 </div>
@@ -32,13 +35,15 @@
 </header>
 
 <!-- Page content -->
-<div class="w3-content w3-padding " style="max-width:1564px">
+<div class="w3-content w3-padding" style="max-width:1564px">
 
   <!-- Project Section -->
   <div class="w3-container w3-padding-32" id="projects">
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">最新提案</h3>
   </div>
-  <div class="grid-container" id="product_panel"></div>
+  <div class="grid-container" id="product_panel">
+  	
+  </div>
   
   
   
@@ -112,7 +117,7 @@
     
     function getProposalID(myObj){
     	localStorage.setItem("click_proposal_id",JSON.stringify(myObj.id)); 
-    	window.location.href="sign_in.html";
+    	window.location.href="proposal.html";
     	
     }
     
@@ -175,7 +180,12 @@
     	    $('#' + id).html('加入購物車');
     	}
     }
-   
+    //從登入後抓member ID
+    var member_id=getMemberIdFromSignIn();
+    function getMemberIdFromSignIn(){
+    	let member_id = JSON.parse(localStorage.getItem("member_id"));
+		return member_id;
+   }
   </script>
 
 <!-- Footer -->
