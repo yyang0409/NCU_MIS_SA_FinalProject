@@ -38,18 +38,18 @@
           <p class="w3-large" id="proposal_content">
           </p>
            <!--跳出訊息-->
-          <span><p><button class="w3-button w3-light-grey w3-block" onclick="document.getElementById('id01').style.display='block'">追蹤</button></p>
+          <span><p ><button class="w3-button w3-light-grey w3-block" onclick="check_follow()" id="follow_btn"></button></p>
           <!-- <button onclick="document.getElementById('id01').style.display='block'" class="w3-right w3-padding-reallysmall w3-button w3-blue-grey">追蹤</button> -->
-            <div id="id01" class="w3-modal">
+            <!--  <div id="id01" class="w3-modal">
                  <div class="w3-modal-content">
                     <div class="w3-container">
                          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                             <p>追蹤成功</p>
                     </div>
                  </div>
-            </div>
+            </div> -->
             <!--跳出訊息結束-->
-            
+           
         </div>
     </div>
 
@@ -120,7 +120,7 @@
      
 <!--難搞介面的script-->
       <script>
-     
+        var member_id=getMemberIdFromHome();
       	var click_proposal_id=0; 
       	//var photo="";
       	click_proposal_id=getClickProposalIdFromHome();
@@ -266,9 +266,132 @@
         document.getElementById("myLink").click();
         
         
+
         
+        function getMemberIdFromHome(){
+        	let member_id = JSON.parse(localStorage.getItem("member_id"));
+    		return member_id;
+       	}
         
+        function change_unfollow_btn(){
+        	document.querySelector('#follow_btn').value='取消追蹤';
+        	document.querySelector('#follow_btn').innerHTML = '取消追蹤';
+        }
         
+        function change_follow_btn(){
+        	document.querySelector('#follow_btn').value='追蹤';
+        	document.querySelector('#follow_btn').innerHTML = '追蹤';
+        }
+        
+        function btn(){
+        	$.ajax({
+    	        type: "GET",
+    	        url: "api/follow_record.do",
+    	        crossDomain: true,
+    	        cache: false,
+    	        dataType: 'json',
+    	        timeout: 5000,
+    	        success: function (response) {
+    	          if (response.status == 200) {
+    	        	$.each(response.response.data, function (){
+                  		if(this.member_id==member_id && this.proposal_id==click_proposal_id){
+                  			change_unfollow_btn()
+                  		}else{
+                  			change_follow_btn()
+                  		}
+                  	})
+                    }
+                  },
+    	        error: function () {
+    	          alert("無法連線到伺服器！");
+    	        }
+    	      });
+        }
+        btn();
+        
+        function check_follow(){
+        	if(document.querySelector('#follow_btn').value=="追蹤"){
+        		follow();
+        	}else{
+        		unfollow();
+        	}
+        }
+        
+        function follow(){
+        	
+        	var type="follow";
+        	
+        	// 將資料組成JSON格式
+	           var data_object = {
+	        	   "type":type,
+	               "member_id":member_id,
+	               "proposal_id":click_proposal_id
+	           };
+
+	        // 將JSON格式轉換成字串
+	           var data_string = JSON.stringify(data_object);
+	           console.log(data_string);
+	           
+        	// 發出POST的AJAX請求
+	           $.ajax({
+	                   type: "POST",
+	                   url: "api/follow_record.do",
+	                   data: data_string,
+	                   crossDomain: true,
+	                   cache: false,
+	                   dataType: 'json',
+	                   timeout: 5000,
+	                   success: function (response) {
+	                   	if(response.status == 200){
+	                   		alert("追蹤成功");
+	                   		change_unfollow_btn();	
+	                   	}else{
+	                   		alert("追蹤失敗");
+	                   	}
+	                   },
+	                   error: function () {
+	                       alert("追蹤時，無法連線到伺服器！");
+	                   }
+	           });
+        }
+       
+		function unfollow(){
+			
+        	var type="unfollow";
+        	
+        	// 將資料組成JSON格式
+	           var data_object = {
+        		   "type":type,
+	               "member_id":member_id,
+	               "proposal_id":click_proposal_id
+	           };
+
+	        // 將JSON格式轉換成字串
+	           var data_string = JSON.stringify(data_object);
+	           console.log(data_string);
+	           
+        	// 發出POST的AJAX請求
+	           $.ajax({
+	                   type: "POST",
+	                   url: "api/follow_record.do",
+	                   data: data_string,
+	                   crossDomain: true,
+	                   cache: false,
+	                   dataType: 'json',
+	                   timeout: 5000,
+	                   success: function (response) {
+	                   	if(response.status == 200){
+	                   		alert("取消追蹤成功");
+	                   		change_follow_btn();	
+	                   	}else{
+	                   		alert("取消追蹤失敗");
+	                   	}
+	                   },
+	                   error: function () {
+	                       alert("取消追蹤時，無法連線到伺服器！");
+	                   }
+	           });
+        }
         
       </script>
         

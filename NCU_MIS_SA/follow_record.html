@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>W3.CSS Template</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+		<script src="statics/js/jquery-3.4.1.min.js"></script>
+		
+		
+		<div class="w3-top z-index:3">
+	      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+	        <a href="home.html" class="w3-bar-item w3-button">呱呱<b> WAWA</b></a>
+	        <!-- Float links to the right. Hide them on small screens -->
+	        <div class="w3-right w3-hide-small">
+	          <a href="home.html" class="w3-bar-item w3-button">探索</a>
+	          <a href="add_proposal.html" class="w3-bar-item w3-button">我想提案</a>
+	          <a href="member.html" class="w3-bar-item w3-button">我的資料</a> 
+	          <a href="index.html" class="w3-bar-item w3-button">登出</a>
+	        </div>
+      	 </div>
+   	   </div>
+	</head>
+	
+	<body>	
+		<br><br>
+		<hr>
+		<h2 class="w3-center">您的追蹤紀錄</h2>
+		
+		<br>
+		
+		<div class="w3-row-padding">
+			<div class="w3-container" id="follow_record">
+			  
+			</div>
+		</div>
+		
+		<hr>
+		
+	</body>	
+	
+	<script>
+	
+		var global_member_id = getMemberIdFromMember();
+		
+	
+		function getMemberIdFromMember(){
+			let member_id = JSON.parse(localStorage.getItem("member_id"));
+			return member_id;
+		}
+		
+		function getFollowRecord(){
+			
+			$.ajax({
+	            type: "GET",
+	            url: "api/follow_record.do",
+	            crossDomain: true,
+	            cache: false,
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {
+	            	      	
+	            	if (response.status == 200) {            		              		
+	            		$.each(response.response.data, function (){
+	            			console.log(response.response.data);
+	            			if (this.member_id==global_member_id){
+	            				console.log(this.proposal_id);
+	            				getProposal(this.proposal_id);
+	            			}             			
+	            		})
+	            		
+	            	}
+	            	
+	            },
+	            error: function () {
+	              alert("無法連線到伺服器！");
+	            }
+	          });		
+		}
+		getFollowRecord();
+		
+		function getProposal(proposal_id){
+			
+			var following_record_panel = "";   
+			
+			$.ajax({
+	            type: "GET",
+	            url: "api/proposal.do",
+	            crossDomain: true,
+	            cache: false,
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {
+	            	console.log(response);
+	            	if (response.status == 200) {
+	            		$.each(response.response.data, function (){
+	            			if (this.proposal_id==proposal_id){
+	            				following_record_panel+=addFollowingRecord(this);
+	            			}             			
+	            		})
+	            		$("#follow_record").append(following_record_panel);
+	            	}
+	            	
+	            },
+	            error: function () {
+	              alert("無法連線到伺服器！");
+	            }
+	          });		
+		}
+		
+		function addFollowingRecord(data){
+			
+			inner_html = "";
+			inner_html += '<ul class="w3-ul w3-card-4">';
+			inner_html += '<li class="w3-bar">';
+			inner_html += '<span onclick="unfollow('+data.proposal_id+')" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>';
+			inner_html += '<img src=statics/img/proposal/'+data.image+' '
+			inner_html += 'class="w3-bar-item w3-hide-small" style="width:250px">';
+			inner_html +='<br>';
+			inner_html +='<br>';
+			inner_html += '<div class="w3-bar-item">';
+			inner_html += '<span class="w3-large"> <b>'+data.title+'</b></span><br>';
+			inner_html += '</div>';
+			inner_html += '</li>';  
+			inner_html += '</ul>'; 
+			inner_html +='<br>';
+			inner_html +='<br>';
+	
+			return inner_html;	
+			
+		}
+	function unfollow(proposal_id){
+			
+        	var type="unfollow";
+        	
+        	// 將資料組成JSON格式
+	           var data_object = {
+        		   "type":type,
+	               "member_id":global_member_id,
+	               "proposal_id":proposal_id
+	           };
+
+	        // 將JSON格式轉換成字串
+	           var data_string = JSON.stringify(data_object);
+	           console.log(data_string);
+	           
+        	// 發出POST的AJAX請求
+	           $.ajax({
+	                   type: "POST",
+	                   url: "api/follow_record.do",
+	                   data: data_string,
+	                   crossDomain: true,
+	                   cache: false,
+	                   dataType: 'json',
+	                   timeout: 5000,
+	                   success: function (response) {
+	                   	if(response.status == 200){
+	                   		alert("取消追蹤成功");	
+	                   		window.location.reload();	
+	                   	}else{
+	                   		alert("取消追蹤失敗");
+	                   	}
+	                   },
+	                   error: function () {
+	                       alert("取消追蹤時，無法連線到伺服器！");
+	                   }
+	           });
+        }
+	
+		
+	</script>
+	
+</html>
