@@ -80,7 +80,7 @@
 	            				global_proposal_option_id = this.proposal_option_id;
 	            				getProposalOption();
 	            				sponsor_record_panel+=addSponsorRecord(this);
-	            				
+	            				console.log(global_proposal_option_title);
 	            				
 	            			}            			
 	            			            			
@@ -139,9 +139,9 @@
 		
 		
 		function addProposalOptionTitle(data){
-			global_proposal_option_title = data.proposal_option_title;
+			let global_proposal_option_title = data.proposal_option_title;
 		}
-	
+		
 		function getProposalOption(){
 			
 			$.ajax({
@@ -151,29 +151,23 @@
 	            cache: false,
 	            dataType: 'json',
 	            timeout: 5000,
-	            success: function (response) {            	           	
-	            	
-	            	if (response.status == 200) {      		
-	            		              		
+	            success: function (response) {
+	            	if (response.status == 200) {               		
 	            		$.each(response.response.data, function (){
-	            			
 	            			if (global_proposal_option_id==this.proposalOption_id){
-	            				
-	            				addProposalOptionTitle(this);        				
-	            			           				
-	            				
-	            			}	            			
+	            				addProposalOptionTitle(this);
+	            			}	
 	            		})
 	            		
-	            		
-	            		
 	            	}
-	            	
 	            },
 	            error: function () {
 	              alert("無法連線到伺服器！");
 	            }
+	            
 	          });
+			
+	
 		}
 		
 		
@@ -192,7 +186,7 @@
 			inner_html += '<li>贊助人住址：'+global_sponsor_address+'</li>';
 			inner_html += '<li>贊助人手機：'+global_sponsor_phone+'</li>';
 			inner_html += '<li>贊助人郵件：'+global_sponsor_email+'</li>';
-			inner_html += '<li>贊助選項ID：'+global_proposal_option_id+'</li>';  
+			inner_html += '<li>贊助提案代碼：'+global_proposal_option_id+'</li>';  
 			inner_html += '<li>贊助數量：'+data.sponsor_amount+'</li>'; //好了
 			inner_html += '<li>贊助單價：'+data.proposal_option_unit_price+'</li>'; //好了
 			inner_html += '<li>贊助總金額：'+data.total_price+'</li>';  //好了
