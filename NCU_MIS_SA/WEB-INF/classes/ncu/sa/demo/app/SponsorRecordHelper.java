@@ -186,6 +186,7 @@ public class  SponsorRecordHelper {
                sr = new SponsorRecord(sponsorRecord_id,member_id, proposalOption_id, sponsor_payment_type, sponsor_amount, proposalOption_unitPrice, totalPrice);
               
                jsa.put(sr.getData());
+               
            }
            
        } catch (SQLException e) {

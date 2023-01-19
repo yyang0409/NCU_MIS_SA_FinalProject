@@ -47,6 +47,11 @@ public class SponsorRecord{
         jso.put("proposal_option_unit_price", getProposalOption_unitPrice());
         jso.put("total_price", getTotalPrice());
         
+        ProposalOptionHelper poh =ProposalOptionHelper.getHelper();
+        jso.put("proposal_option_title", poh.getProposalOptionById(Integer.toString(getProposalOption_id())).getProposalOptionTitle());
+        ProposalHelper ph =ProposalHelper.getHelper();
+        jso.put("proposal_title",ph.getById(Integer.toString(poh.getProposalOptionById(Integer.toString(getProposalOption_id())).getProposalId())).getTitle());
+        
         return jso;
     }
 	
