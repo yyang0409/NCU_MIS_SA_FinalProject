@@ -78,9 +78,9 @@
 	            			if (this.member_id==global_member_id){          	
 	            						
 	            				global_proposal_option_id = this.proposal_option_id;
-	            				getProposalOption();
+	            				//getProposalOption();
 	            				sponsor_record_panel+=addSponsorRecord(this);
-	            				console.log(global_proposal_option_title);
+	            				//console.log(global_proposal_option_title);
 	            				
 	            			}            			
 	            			            			
@@ -180,13 +180,14 @@
 			
 			inner_html = "";
 			inner_html += '<div class="w3-card-4 w3-container">';
-			inner_html += '<h2>訂單紀錄</h2>';
+			inner_html += '<h2>贊助紀錄</h2>';
 			inner_html += '<ul class="w3-ul w3-margin-bottom">';
 			inner_html += '<li>贊助人姓名：'+global_sponsor_name+'</li>';
 			inner_html += '<li>贊助人住址：'+global_sponsor_address+'</li>';
 			inner_html += '<li>贊助人手機：'+global_sponsor_phone+'</li>';
 			inner_html += '<li>贊助人郵件：'+global_sponsor_email+'</li>';
-			inner_html += '<li>贊助提案代碼：'+global_proposal_option_id+'</li>';  
+			inner_html += '<li>提案名稱：'+data.proposal_title+'</li>'; 
+			inner_html += '<li>提案方案名稱：'+data.proposal_option_title+'</li>'; 
 			inner_html += '<li>贊助數量：'+data.sponsor_amount+'</li>'; //好了
 			inner_html += '<li>贊助單價：'+data.proposal_option_unit_price+'</li>'; //好了
 			inner_html += '<li>贊助總金額：'+data.total_price+'</li>';  //好了
