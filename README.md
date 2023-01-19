@@ -1,4 +1,4 @@
-# NCU_MIS_SA_FinalProject_第三組
+# NCU_MIS_SA_FinalProject_第三組_呱呱WAWA募資平台
 組員:  
   資管三 A 109403025 詹凱程  
   資管三 A 109403502 楊珮綾  
